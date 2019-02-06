@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\DepartmentsSearch */
@@ -35,7 +36,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'department_id',
             'department_name',
-            'department_created_date',
+            [
+                'attribute' => 'department_created_date',
+                'value' => 'department_created_date',
+                'format' => 'raw',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'department_created_date',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd'
+                        ]
+                ])
+            ],
+            //'department_created_date',
             //'department_status',
 
             ['class' => 'yii\grid\ActionColumn'],
