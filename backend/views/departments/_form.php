@@ -17,23 +17,38 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'companies_company_id')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Companies::find()->all(),'company_id','company_name'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Select a company ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+    <? //$form->field($model, 'companies_company_id')->widget(Select2::classname(), [
+    //     'data' => ArrayHelper::map(Companies::find()->all(),'company_id','company_name'),
+    //     'language' => 'en',
+    //     'options' => ['placeholder' => 'Select a company ...'],
+    //     'pluginOptions' => [
+    //         'allowClear' => true
+    //     ],
+    // ]) ?>
+    <?= $form->field($model, 'companies_company_id')->dropDownList(
+        ArrayHelper::map(Companies::find()->all(),'company_id','company_name'),
+        [
+            'prompt' => 'Select Company',
+            'onchange' => '
+                $.post( "index.php?r=branches/lists&id='.'"+$(this).val(), function(data){
+                    $( "select#departments-branches_branch_id" ).html(data);
+                });'
+        ]); ?>
 
-    <?= $form->field($model, 'branches_branch_id')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Branches::find()->all(),'branch_id','branch_name'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Select a branch ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+    <?= $form->field($model, 'branches_branch_id')->dropDownList(
+        ArrayHelper::map(Branches::find()->all(),'branch_id','branch_name'),
+        [
+            'prompt' => 'Select Branch',
+        ]); ?>
+
+    <?//$form->field($model, 'branches_branch_id')->widget(Select2::classname(), [
+    //     'data' => ArrayHelper::map(Branches::find()->all(),'branch_id','branch_name'),
+    //     'language' => 'en',
+    //     'options' => ['placeholder' => 'Select a branch ...'],
+    //     'pluginOptions' => [
+    //         'allowClear' => true
+    //     ],
+    // ]); ?>
 
     <?= $form->field($model, 'department_name')->textInput(['maxlength' => true]) ?>
 
