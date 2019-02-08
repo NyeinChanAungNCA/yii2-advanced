@@ -81,9 +81,9 @@ class CompaniesController extends Controller
             return $this->redirect(['view', 'id' => $model->company_id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
-        ]);
+        ]);// change render() to renderAjax() for modal show
     }
 
     /**
